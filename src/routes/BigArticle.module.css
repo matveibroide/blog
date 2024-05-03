@@ -1,0 +1,15 @@
+.articleContainer {
+    background-color: #EBEEF3;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.bigArticle {
+    margin-top: 2%;
+    width: 75%;
+    background-color: #fff;
+    height: 90%;
+}
+

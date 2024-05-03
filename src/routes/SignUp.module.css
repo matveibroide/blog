@@ -1,0 +1,48 @@
+.formContainer {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.form {
+
+   height: 50%;
+    width: 17%;
+    margin: 0 auto;
+    margin-top: 5%;
+    background-color: #fff;
+}
+
+.formInnerWrapper {
+    list-style: none;
+    padding: 0;
+    height: 100%;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.listItem {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.formBtn {
+    border: none;
+    border-radius: 4px;
+    height: 10%;
+    background-color: #1890FF;
+    color: #fff;
+}
+
+.message {
+    margin: 0 auto;
+    font-size: 12px;
+    color: #8C8C8C;
+}
+
