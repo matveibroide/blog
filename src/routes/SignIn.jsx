@@ -47,7 +47,7 @@ export default function SignIn() {
                         <input className={s.input} placeholder='Password' {...register('password')} type="password" />
                     </li>
                     <li className={s.listItem}>
-                        <button className={s.formBtn}>Login</button>
+                        <button style={{height:'40px'}} className={s.formBtn}>Login</button>
                     </li>
                     <li>
                     <p style={{fontSize:'12px',color:'#8C8C8C',textAlign:'center'}}>Dont have an account <span style={{color:'#1890FF'}}>Sign Up</span></p>

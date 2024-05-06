@@ -1,0 +1,15 @@
+.formContainer {
+    composes: formContainer from './SignUp.module.css'
+}
+
+.form {
+    composes: form from './SignUp.module.css'
+}
+
+.formInnerWrapper {
+    composes: formInnerWrapper from './SignUp.module.css'
+}
+
+.listItem {
+    composes: listItem from './SignUp.module.css'
+}

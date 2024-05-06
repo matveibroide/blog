@@ -12,6 +12,8 @@ import {
   setRegisterSuccess,
 } from "../store/userRegisterSlice";
 
+import { setUpdateError,setUpdateLoading,setUpdateSuccess } from "../store/updateUser.slice";
+
 import {setUser,setLoginLoading,setLoginError} from '../store/userLoginSlice'
 
 const BASE = `https://api.realworld.io/api/`;
@@ -74,6 +76,26 @@ const sendCredentials = async (credentials) => {
   }
 };
 
+
+const sentUpdatedUserData = async (data,token) => {
+  console.log(token)
+  let res = await fetch(`${BASE}user`,{
+    method: "PUT",
+    headers: {
+      'accept': 'application/json',
+    'Authorization': 'Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyMzg0N30sImlhdCI6MTcxNDk4NTU0MCwiZXhwIjoxNzIwMTY5NTQwfQ.XxIuA7sO0nb_fFHOchG3LMA-rIivRJNa2DVLiHMUOv0',
+    'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data),
+  })
+
+  if (!res.ok) {
+    throw new Error(`Couldn't update you account...Received ${res.status}`);
+  } else {
+    return res.json();
+  }
+}
+
 // ----------thunk creators-------------
 
 export const createNewUser = (data) => {
@@ -133,5 +155,18 @@ export const signIn = (data) => {
       .catch(e => dispatch(setLoginError(e)))
   };
 };
+
+export const updateUser = (data,token) => {
+  return (dispatch) => {
+    dispatch(setUpdateLoading())
+    sentUpdatedUserData(data,token)
+    .then(data => {
+      dispatch(setUser(data))
+      localStorage.setItem('user',JSON.stringify(data))
+      dispatch(setUpdateSuccess())
+    })
+    .catch(e => dispatch(setUpdateError(e)))
+  }
+}
 
 export { getArticles, getArticle, fetchArticle, fetchArticles };

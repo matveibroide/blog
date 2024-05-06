@@ -31,11 +31,13 @@ export default function Root() {
          <div className={s.app}>
         <nav >
             <ul className={s.nav}>
-            <li>Realworld blog</li>
+            <Link to = './'>
+                <li style={{cursor:'pointer'}}>Realworld blog</li>
+            </Link>
            {user ? 
            <ul className={s.userNav}>
             <li><button style={{backgroundColor:'#fff'}} className={s.actionBtn}>Create Article</button></li>
-            <li className={s.userDetails}><p style={{fontSize:'18px'}}>{user?.user?.username}</p><img style={{height:'46px'}} src={`${user?.user?.image}`} alt="user avatar"/></li>
+            <li className={s.userDetails}><p style={{fontSize:'18px'}}>{user?.user?.username}</p><Link to = '/profile'><img style={{height:'46px'}} src={`${user?.user?.image}`} alt="user avatar"/></Link></li>
             <li><button onClick={handleDelete} style={{height:'51px',width:'109px',background:'none',border:'1px solid black',borderRadius:'4px',cursor:'pointer'}}>Log Out</button></li>
            </ul>
             :

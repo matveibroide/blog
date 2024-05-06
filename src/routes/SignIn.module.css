@@ -25,6 +25,6 @@
 }
 
 .formBtn {
-    height: 40px;
     composes: formBtn from './SignUp.module.css';
+    
 }

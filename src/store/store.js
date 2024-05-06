@@ -3,6 +3,7 @@ import bigArticleReducer from "./bigArticlesSlice";
 import articlesReducer from "./articlesSlice";
 import registerReducer from "./userRegisterSlice";
 import loginReducer from './userLoginSlice'
+import updateUserReducer from './updateUser.slice'
 export default configureStore({
-  reducer: { bigArticleReducer, articlesReducer, registerReducer,loginReducer },
+  reducer: { bigArticleReducer, articlesReducer, registerReducer,loginReducer,updateUserReducer },
 });
