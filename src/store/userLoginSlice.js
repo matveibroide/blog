@@ -19,10 +19,13 @@ export const userLoginSlice = createSlice({
         },
         setLoginLoading: state => {
             return {...state,loading:true}
+        },
+        deleteUser:state => {
+            return {...state,user:null}
         }
     }
 })
 
-export const {setUser,setLoginLoading,setLoginError} = userLoginSlice.actions;
+export const {setUser,setLoginLoading,setLoginError,deleteUser} = userLoginSlice.actions;
 
 export default userLoginSlice.reducer;

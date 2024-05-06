@@ -27,8 +27,8 @@
 
 
 
-.signupBtn {
-    
+.actionBtn {
+    cursor: pointer;
     color: #52C41A;
     border: 1px solid #52C41A ;
     padding: 6% 10% 6% 10%;
@@ -44,3 +44,15 @@
     list-style: none;
     align-items: center;
 }
+
+.userDetails {
+    width: 32%;
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+
+
+

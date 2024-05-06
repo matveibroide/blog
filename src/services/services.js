@@ -127,6 +127,7 @@ export const signIn = (data) => {
       sendCredentials(data)
       .then(data => {
         dispatch(setLoginError(null))
+        localStorage.setItem('user',JSON.stringify(data))
         dispatch(setUser(data))
       })
       .catch(e => dispatch(setLoginError(e)))
