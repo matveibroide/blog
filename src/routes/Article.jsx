@@ -4,12 +4,21 @@ import {Link} from 'react-router-dom'
 import {useDispatch,useSelector } from 'react-redux'
 import { setSlug } from '../store/bigArticlesSlice'
 
+
+export const getYearAndMonth = (data) => {
+    let date = new Date(data)
+    let year = date.getFullYear()
+    let month =  date.toLocaleString('default', { month: 'long' });
+
+    return `${year} ${month}`
+}
+
 export default function Article({description,author,title,slug,tagList,createdAt}) {
 
     const dispatch = useDispatch()
-    let date = new Date(createdAt)
-    let year = date.getFullYear()
-    let month =  date.toLocaleString('default', { month: 'long' });
+
+
+    const creationDate = getYearAndMonth(createdAt)
 
     const articlesLoading = useSelector(state => state.articlesReducer.loading)
     
@@ -47,7 +56,7 @@ export default function Article({description,author,title,slug,tagList,createdAt
             <div className={s.userInfo}>
                 <div className={s.userDetails}>
                 <span>{username}</span>
-                <span>{`${month} ${year}`}</span>
+                <span>{`${creationDate}`}</span>
                 </div>
                 <img className={s.avatar} src={`${image}`} alt="" />
             </div>

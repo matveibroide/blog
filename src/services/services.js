@@ -1,4 +1,5 @@
 import { setArticle, setError, setLoading } from "../store/bigArticlesSlice";
+
 import {
   setArticles,
   setArticlesError,
@@ -15,6 +16,9 @@ import {
 import { setUpdateError,setUpdateLoading,setUpdateSuccess } from "../store/updateUser.slice";
 
 import {setUser,setLoginLoading,setLoginError} from '../store/userLoginSlice'
+
+
+
 
 const BASE = `https://api.realworld.io/api/`;
 
@@ -78,7 +82,6 @@ const sendCredentials = async (credentials) => {
 
 
 const sentUpdatedUserData = async (data,token) => {
-  console.log(token)
   let res = await fetch(`${BASE}user`,{
     method: "PUT",
     headers: {
@@ -94,6 +97,27 @@ const sentUpdatedUserData = async (data,token) => {
   } else {
     return res.json();
   }
+}
+
+export const postArticle = async (data) => {
+  console.log(data)
+  const res = await fetch(`${BASE}articles`,{
+    method: "POST",
+    headers: {
+      'accept': 'application/json',
+      'Authorization': 'Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyMzg0N30sImlhdCI6MTcxNDk4NTU0MCwiZXhwIjoxNzIwMTY5NTQwfQ.XxIuA7sO0nb_fFHOchG3LMA-rIivRJNa2DVLiHMUOv0',
+      'Content-Type': 'application/json'
+    },
+    body:JSON.stringify(data)
+
+  })
+
+  if (!res.ok) {
+    throw new Error(`Couldn't update article...Received ${res.status}`);
+  } else {
+    return res.json();
+  }
+
 }
 
 // ----------thunk creators-------------

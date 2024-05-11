@@ -36,7 +36,7 @@ export default function Root() {
             </Link>
            {user ? 
            <ul className={s.userNav}>
-            <li><button style={{backgroundColor:'#fff'}} className={s.actionBtn}>Create Article</button></li>
+            <li><Link to='/new-article'><button style={{backgroundColor:'#fff'}} className={s.actionBtn}>Create Article</button></Link></li>
             <li className={s.userDetails}><p style={{fontSize:'18px'}}>{user?.user?.username}</p><Link to = '/profile'><img style={{height:'46px'}} src={`${user?.user?.image}`} alt="user avatar"/></Link></li>
             <li><button onClick={handleDelete} style={{height:'51px',width:'109px',background:'none',border:'1px solid black',borderRadius:'4px',cursor:'pointer'}}>Log Out</button></li>
            </ul>
