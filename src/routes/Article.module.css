@@ -18,6 +18,8 @@ background-color: #FFFF;
 }
 
 .articleHeader {
+    margin-right: 10px;
+    display: flex;
     font-weight: 430;
     width: 160px;
     height: 28px;

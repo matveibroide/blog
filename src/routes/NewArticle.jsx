@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import s from './NewArticle.module.css'
 import {useForm} from 'react-hook-form'
 import { postArticle } from '../services/services'
+import { useSelector } from 'react-redux'
 
 export default function NewArticle() {
 
@@ -16,8 +17,8 @@ export default function NewArticle() {
     const createId = () => "id" + Math.random().toString(16).slice(2)
     
     const [tags,setTags] = useState([{value:'',clicked:false,id:createId()}])
-    
-   
+    const [error,setError] = useState(null)
+    const [success,setSuccess] = useState(null)
 
     const addTag = (tagName, id) => {
         setTags(prevTags => {
@@ -56,21 +57,27 @@ export default function NewArticle() {
         setTags(prev => prev.filter(item => item.id != id))
     }
 
-
+    const token = useSelector(state => state.loginReducer.user?.user?.token)
     
     return (
         <div className={s.formContainer}>
             <form className={s.form} action="" onSubmit={handleSubmit((data)=>{
                 const {title,description,text} = data
-                const articleTags = tags.map(item => item.value)
+                const articleTags = tags.reduce((acc,next)=>{
+                  if (next.value !== '') {
+                    acc.push(next.value)
+                  }  
+                  return acc
+                },[])
+                console.log(articleTags)
                 postArticle({
                     article:{
                         title:title,
                         description:description,
                         text:text,
-                        tags:articleTags
+                        tagList:articleTags
                     }
-                })
+                },token).then(data => setSuccess(true))
             })}>
                 <ul className={s.formInnerWrapper}>
                     <li><h1 style={{textAlign:'center'}}>Create new article</h1></li>
@@ -110,7 +117,7 @@ export default function NewArticle() {
                         </ul>
                     </li>
                     <li>
-                        <button className={s.formSubmitBtn}>Send</button>
+                        <button className={s.formSubmitBtn}>Send</button>{success ? <p style={{color:'green'}}>Article created!</p> : null}
                     </li>
                 </ul>
             </form>

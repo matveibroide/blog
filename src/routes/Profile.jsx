@@ -26,7 +26,7 @@ export default function Profile() {
                 dispatch(updateUser({user:{
                     username:name,
                     email:email,
-                    password:password,
+                    bio:password,
                     image:avatar   
                 }},token))
 

@@ -18,9 +18,9 @@ import { setUpdateError,setUpdateLoading,setUpdateSuccess } from "../store/updat
 import {setUser,setLoginLoading,setLoginError} from '../store/userLoginSlice'
 
 
+/* const BASE = `https://api.realworld.io/api/`; */
 
-
-const BASE = `https://api.realworld.io/api/`;
+const BASE = `https://blog.kata.academy/api/`;
 
 const getArticles = async (offset = 0) => {
   let res = await fetch(`${BASE}articles/?offset=${offset}&limit=5`);
@@ -86,7 +86,7 @@ const sentUpdatedUserData = async (data,token) => {
     method: "PUT",
     headers: {
       'accept': 'application/json',
-    'Authorization': 'Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyMzg0N30sImlhdCI6MTcxNDk4NTU0MCwiZXhwIjoxNzIwMTY5NTQwfQ.XxIuA7sO0nb_fFHOchG3LMA-rIivRJNa2DVLiHMUOv0',
+    'Authorization': `Token ${token}`,
     'Content-Type': 'application/json'
     },
     body: JSON.stringify(data),
@@ -99,13 +99,13 @@ const sentUpdatedUserData = async (data,token) => {
   }
 }
 
-export const postArticle = async (data) => {
-  console.log(data)
+export const postArticle = async (data,token) => {
+  console.log(token)
   const res = await fetch(`${BASE}articles`,{
     method: "POST",
     headers: {
       'accept': 'application/json',
-      'Authorization': 'Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyMzg0N30sImlhdCI6MTcxNDk4NTU0MCwiZXhwIjoxNzIwMTY5NTQwfQ.XxIuA7sO0nb_fFHOchG3LMA-rIivRJNa2DVLiHMUOv0',
+      'Authorization': `Token ${token}`,
       'Content-Type': 'application/json'
     },
     body:JSON.stringify(data)
@@ -115,6 +115,50 @@ export const postArticle = async (data) => {
   if (!res.ok) {
     throw new Error(`Couldn't update article...Received ${res.status}`);
   } else {
+    
+    return res.json();
+  }
+
+}
+
+export const likeAnArticle = async (slug,token) => {
+  let res = await fetch(`${BASE}articles/${slug}/favorite`,{
+    method: "POST",
+    headers:{
+      'accept': 'application/json',
+      'Authorization': `Token ${token}`,
+      'Content-Type': 'application/json'
+    }
+  })
+
+  if (!res.ok) {
+    
+    throw new Error(`Couldn't like an article...Received ${res.status}`);
+    
+  } else {
+    
+    return res.json();
+  }
+
+}
+
+export const unlikeAnArticle = async (slug,token) => {
+  console.log(slug,token)
+  let res = await fetch(`${BASE}articles/${slug}/favorite`,{
+    method: "DELETE",
+    headers:{
+      'accept': 'application/json',
+      'Authorization': `Token ${token}`,
+      'Content-Type': 'application/json'
+    }
+  })
+
+  if (!res.ok) {
+    
+    throw new Error(`Couldn't like an article...Received ${res.status}`);
+    
+  } else {
+    
     return res.json();
   }
 

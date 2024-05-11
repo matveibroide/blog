@@ -28,7 +28,7 @@ export default function Articles() {
 
    
 
-    const {articles} = useSelector(state => state.articlesReducer.articles)
+    const {articles} = useSelector(state => state.articlesReducer?.articles)
     const error = useSelector(state => state.articlesReducer.error)
     const loading = useSelector(state => state.articlesReducer.loading)
 
@@ -62,10 +62,10 @@ export default function Articles() {
             {
 
             articles != undefined ? articles.map(item =>{
-                const {slug,title,description,author,tagList,createdAt} = item
-                
+                const {slug,title,description,author,tagList,createdAt,favorited,favoritesCount:likes} = item
+                console.log(likes)
                 return (
-                    <Article key ={slug} slug = {slug} title = {title} description = {description} author = {author} tagList = {tagList} createdAt = {createdAt}/>
+                    <Article key ={slug} slug = {slug} title = {title} description = {description} author = {author} tagList = {tagList} createdAt = {createdAt} favorited = {favorited} likes = {likes}/>
                 )
             }) : null
 
