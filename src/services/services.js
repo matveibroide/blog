@@ -1,4 +1,4 @@
-import { setArticle, setError, setLoading } from "../store/bigArticlesSlice";
+import { setArticle, setDeleted, setError, setLoading } from "../store/bigArticlesSlice";
 
 import {
   setArticles,
@@ -164,6 +164,24 @@ export const unlikeAnArticle = async (slug,token) => {
 
 }
 
+export const deleteAnArticle = async (slug,token) => {
+  let res = await fetch(`${BASE}articles/${slug}`,{
+    method:'DELETE',
+    headers:{
+      'Authorization': `Token ${token}`,
+    }
+  })
+
+  if (!res.ok) {
+    
+    throw new Error(`Couldn't like an article...Received ${res.status}`);
+    
+  } else {
+    
+    return 'has been deleted';
+  }
+}
+
 // ----------thunk creators-------------
 
 export const createNewUser = (data) => {
@@ -236,5 +254,16 @@ export const updateUser = (data,token) => {
     .catch(e => dispatch(setUpdateError(e)))
   }
 }
+
+  export const removeArticle = (slug,token) => {
+
+    return (dispatch) => {
+      deleteAnArticle(slug,token).then(data =>{
+        console.log(data)
+        dispatch(setArticle(null))
+        dispatch(setDeleted(true))
+      }).catch(e => dispatch(setError(e)))
+    }
+  }
 
 export { getArticles, getArticle, fetchArticle, fetchArticles };

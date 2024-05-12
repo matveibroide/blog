@@ -74,7 +74,7 @@ export default function NewArticle() {
                     article:{
                         title:title,
                         description:description,
-                        text:text,
+                        body:text,
                         tagList:articleTags
                     }
                 },token).then(data => setSuccess(true))

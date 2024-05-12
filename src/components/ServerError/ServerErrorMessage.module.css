@@ -11,4 +11,11 @@
     width: fit-content;
     padding: 5%;
     margin: 0 auto;
+    color:#F5222D;
+    padding: 1%;
+    background-color: #fff;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #F5222D;
 }
