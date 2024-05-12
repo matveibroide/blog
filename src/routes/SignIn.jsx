@@ -2,7 +2,7 @@ import s from './SignIn.module.css'
 import {useForm} from 'react-hook-form'
 import { useDispatch,useSelector } from 'react-redux'
 import { signIn } from '../services/services'
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 
 
 
@@ -50,7 +50,7 @@ export default function SignIn() {
                         <button style={{height:'40px'}} className={s.formBtn}>Login</button>
                     </li>
                     <li>
-                    <p style={{fontSize:'12px',color:'#8C8C8C',textAlign:'center'}}>Dont have an account <span style={{color:'#1890FF'}}>Sign Up</span></p>
+                    <p style={{fontSize:'12px',color:'#8C8C8C',textAlign:'center'}}>Dont have an account <Link style={{textDecoration:'none'}} to = '/sign-up'><span style={{color:'#1890FF'}}>Sign Up</span></Link></p>
                     </li>
                 {error && !user ? <p style={{color:'red',textAlign:'center'}}>Could not sign in...Try again</p> : null }
                 </ul>

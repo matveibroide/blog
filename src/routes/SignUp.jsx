@@ -71,7 +71,7 @@ export default function SignUp() {
                         </li>
                         
                         <button className={s.formBtn} type="submit">Create</button>
-                        <div className={s.message}>Already have an account? <Link style={{color:'#1890FF',textDecoration:'none'}}>Sign In</Link>.</div>
+                        <div className={s.message}>Already have an account? <Link to = '/sign-in' style={{color:'#1890FF',textDecoration:'none'}}>Sign In</Link>.</div>
                 </ul>
                 {registerSuccess ? <p style={{color:'#2ed62e',margin:'0 auto',textAlign:'center',backgroundColor:'#fff',paddingBottom:'5%'}}>Register completed, try to sign in</p> : null}
             </form>}

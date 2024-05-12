@@ -21,7 +21,8 @@
 .input {
     padding: 5%;
     border: 1px solid #D9D9D9;
-    border-radius: 4px;;
+    border-radius: 4px;
+    color: #958f8f;
 }
 
 .formBtn {

@@ -13,3 +13,16 @@
 .listItem {
     composes: listItem from './SignUp.module.css'
 }
+
+.btnSubmit {
+    background-color: #1890FF;
+    border-radius: 4px;
+    color: white;
+    border: none;
+    width: 319px;
+    height: 40px;
+}
+
+.formInput {
+    composes: formInput from './NewArticle.module.css'
+}
