@@ -122,6 +122,8 @@ export const postArticle = async (data,token) => {
 }
 
 export const likeAnArticle = async (slug,token) => {
+  console.log('Like')
+  localStorage.setItem(slug,true)
   let res = await fetch(`${BASE}articles/${slug}/favorite`,{
     method: "POST",
     headers:{
@@ -143,7 +145,8 @@ export const likeAnArticle = async (slug,token) => {
 }
 
 export const unlikeAnArticle = async (slug,token) => {
-  console.log(slug,token)
+  console.log('Unlike')
+  localStorage.removeItem(slug)
   let res = await fetch(`${BASE}articles/${slug}/favorite`,{
     method: "DELETE",
     headers:{
@@ -155,7 +158,7 @@ export const unlikeAnArticle = async (slug,token) => {
 
   if (!res.ok) {
     
-    throw new Error(`Couldn't like an article...Received ${res.status}`);
+    throw new Error(`Couldn't delete like from article...Received ${res.status}`);
     
   } else {
     
@@ -215,13 +218,25 @@ const fetchArticle = (slug) => {
   };
 };
 
+
 const fetchArticles = (offset) => {
   return (dispatch) => {
     dispatch(setArticlesLoading());
     getArticles(offset)
       .then((data) => {
+        console.log('fetched')
         dispatch(setSpinner());
-        dispatch(setArticles(data));
+        let likedArticles = [];
+        if (Array.isArray(data.articles)) {
+          likedArticles = data.articles.map((item) => {
+            if (JSON.parse(localStorage.getItem(item?.slug))) {
+              return { ...item, favorited: true };
+            } else {
+              return item;
+            }
+          });
+        }
+        dispatch(setArticles(likedArticles));
       })
       .catch((error) => {
         dispatch(setArticlesError(error.message));

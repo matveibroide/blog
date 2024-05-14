@@ -1,4 +1,4 @@
-import { getArticles } from "../services/services"
+
 import {Spin} from 'antd'
 import Article from "./Article"
 import
@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import {useSelector,useDispatch} from 'react-redux'
 import { fetchArticles } from "../services/services";
 import ServerErrorMessage from "../components/ServerError/ServerErrorMessage";
+import { setStoreOffset } from '../store/articlesSlice';
 
 
 export default function Articles() {
@@ -28,7 +29,7 @@ export default function Articles() {
 
    
 
-    const {articles} = useSelector(state => state.articlesReducer?.articles)
+    const articles = useSelector(state => state.articlesReducer?.articles)
     const error = useSelector(state => state.articlesReducer.error)
     const loading = useSelector(state => state.articlesReducer.loading)
 
@@ -40,17 +41,20 @@ export default function Articles() {
 
         if (pageNum <= 1) {
             setPage(pageNum)
-            setOffset(0)
+            setStoreOffset(0)
+            dispatch(setOffset)
         }
 
         else {
             setPage(pageNum)
             setOffset(5 * page)
+            dispatch(setStoreOffset(5))
         }
         
     }
 
-  
+ 
+    
 
     return (
       <>
@@ -63,7 +67,7 @@ export default function Articles() {
 
             articles != undefined ? articles.map(item =>{
                 const {slug,title,description,author,tagList,createdAt,favorited,favoritesCount:likes} = item
-                console.log(likes)
+                
                 return (
                     <Article key ={slug} slug = {slug} title = {title} description = {description} author = {author} tagList = {tagList} createdAt = {createdAt} favorited = {favorited} likes = {likes}/>
                 )
