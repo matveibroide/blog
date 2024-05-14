@@ -13,13 +13,13 @@ export default function NewArticle() {
 
     }})
 
-
+   
     const createId = () => "id" + Math.random().toString(16).slice(2)
     
     const [tags,setTags] = useState([{value:'',clicked:false,id:createId()}])
     const [error,setError] = useState(null)
     const [success,setSuccess] = useState(null)
-
+    
     const addTag = (tagName, id) => {
         setTags(prevTags => {
             const updatedTags = prevTags.map(item => {
@@ -83,15 +83,18 @@ export default function NewArticle() {
                     <li><h1 style={{textAlign:'center'}}>Create new article</h1></li>
                     <li className={s.listItem}>
                         Title
-                        <input className={s.formInput} {...register('title',{})} type="text" placeholder='Title' />
+                        <input className={s.formInput} {...register('title',{required:'Title required'})} type="text" placeholder='Title' />
+                        {errors?.title?.message ? <p style={{color:'red'}}>{errors?.title?.message}</p> : null}
                     </li>
                     <li className={s.listItem}>
                     Short description
-                    <input className={s.formInput} {...register('description',{})} type="text" placeholder='Title' />
+                    <input className={s.formInput} {...register('description',{required:'Description required'})} type="text" placeholder='Description' />
+                    {errors?.description?.message ? <p style={{color:'red'}}>{errors?.description?.message}</p> : null}
                     </li>
                     <li className={s.listItem}>
                     Text
-                    <input style={{height:'168px'}} className={s.formInput} {...register('text',{})} type="text" placeholder='Title' />
+                    <input style={{height:'168px'}} className={s.formInput} {...register('text',{required:'Body required'})} type="text" placeholder='Text' />
+                    {errors?.text?.message ? <p style={{color:'red'}}>{errors?.text?.message}</p> : null}
                     </li>
                     <li className={s.listItem}>
                         Tags

@@ -210,7 +210,8 @@ const fetchArticle = (slug) => {
     getArticle(slug)
       .then((data) => {
         const { article } = data;
-        dispatch(setArticle(article));
+        const updatedArticle = JSON.parse(localStorage.getItem(slug)) ? {...article,favorited:true} : article
+        dispatch(setArticle(updatedArticle));
       })
       .catch((error) => {
         dispatch(setError(error));
