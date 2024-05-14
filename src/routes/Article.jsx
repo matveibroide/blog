@@ -4,9 +4,6 @@ import {Link} from 'react-router-dom'
 import {useDispatch,useSelector } from 'react-redux'
 import { setSlug } from '../store/bigArticlesSlice'
 import { fetchArticles, likeAnArticle,unlikeAnArticle } from '../services/services'
-import { useEffect, useState } from 'react'
-import { setArticles } from '../store/articlesSlice'
-
 
 export const getYearAndMonth = (data) => {
     let date = new Date(data)
@@ -18,7 +15,7 @@ export const getYearAndMonth = (data) => {
 
 
 
-export default function Article({description,author,title,slug,tagList,createdAt,likes,favorited}) {
+export default function Article({description,author,title,slug,tagList,createdAt,likes,favorited,offset}) {
     
     
    
@@ -32,7 +29,7 @@ export default function Article({description,author,title,slug,tagList,createdAt
     const greyColor = 'grey'
     const blackColor = 'black'
 
-    const offset = useSelector(state => state.articlesReducer?.offset)
+    
     
     const handleClick = async (slug, token,currentFavorited) => {
         

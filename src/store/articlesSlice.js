@@ -32,14 +32,9 @@ const articleSlice = createSlice({
     setSpinner: (state) => {
       return { ...state, spinner: false };
     },
-
-    setStoreOffset:(state,action) => {
-      return {...state,offset:action.payload}
-    }
-   
   },
 });
 
-export const { setArticles, setArticlesLoading, setArticlesError, setSpinner,setStoreOffset} =
+export const { setArticles, setArticlesLoading, setArticlesError, setSpinner} =
   articleSlice.actions;
 export default articleSlice.reducer;

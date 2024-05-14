@@ -10,11 +10,8 @@ import { useEffect, useState } from "react";
 import {useSelector,useDispatch} from 'react-redux'
 import { fetchArticles } from "../services/services";
 import ServerErrorMessage from "../components/ServerError/ServerErrorMessage";
-import { setStoreOffset } from '../store/articlesSlice';
-
 
 export default function Articles() {
-
 
     const [page,setPage] = useState(1)
     const [offset,setOffset] = useState(0)
@@ -22,13 +19,12 @@ export default function Articles() {
     const spinner = useSelector(state => state.articlesReducer.spinner)
     
     const dispatch = useDispatch()
+    
     useEffect(()=>{
         dispatch(fetchArticles(offset))
-        
     },[offset])
 
    
-
     const articles = useSelector(state => state.articlesReducer?.articles)
     const error = useSelector(state => state.articlesReducer.error)
     const loading = useSelector(state => state.articlesReducer.loading)
@@ -41,14 +37,13 @@ export default function Articles() {
 
         if (pageNum <= 1) {
             setPage(pageNum)
-            setStoreOffset(0)
-            dispatch(setOffset)
+            setOffset(0)
+            
         }
 
         else {
             setPage(pageNum)
-            setOffset(5 * page)
-            dispatch(setStoreOffset(5))
+            setOffset(5 * page) 
         }
         
     }
@@ -69,7 +64,7 @@ export default function Articles() {
                 const {slug,title,description,author,tagList,createdAt,favorited,favoritesCount:likes} = item
                 
                 return (
-                    <Article key ={slug} slug = {slug} title = {title} description = {description} author = {author} tagList = {tagList} createdAt = {createdAt} favorited = {favorited} likes = {likes}/>
+                    <Article offset = {offset} key ={slug} slug = {slug} title = {title} description = {description} author = {author} tagList = {tagList} createdAt = {createdAt} favorited = {favorited} likes = {likes}/>
                 )
             }) : null
 
