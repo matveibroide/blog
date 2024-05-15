@@ -50,6 +50,11 @@ const router = createBrowserRouter([
       },
       {
         path:'/new-article',
+        element:<NewArticle type = {'new'}/>,
+        errorElement:<ErrorPage/>
+      },
+      {
+        path:'/articles/:slug/edit',
         element:<NewArticle/>,
         errorElement:<ErrorPage/>
       }

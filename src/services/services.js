@@ -1,4 +1,9 @@
-import { setArticle, setDeleted, setError, setLoading } from "../store/bigArticlesSlice";
+import {
+  setArticle,
+  setDeleted,
+  setError,
+  setLoading,
+} from "../store/bigArticlesSlice";
 
 import {
   setArticles,
@@ -13,10 +18,18 @@ import {
   setRegisterSuccess,
 } from "../store/userRegisterSlice";
 
-import { setUpdateError,setUpdateLoading,setUpdateSuccess } from "../store/updateUser.slice";
+import {
+  setUpdateError,
+  setUpdateLoading,
+  setUpdateSuccess,
+} from "../store/updateUser.slice";
 
-import {setUser,setLoginLoading,setLoginError} from '../store/userLoginSlice'
-
+import {
+  setUser,
+  setLoginLoading,
+  setLoginError,
+} from "../store/userLoginSlice";
+import { setUpdateFormError, setUpdateFormLoading, setUpdateFormSuccess } from "../store/updateFormSlice";
 
 /* const BASE = `https://api.realworld.io/api/`; */
 
@@ -65,7 +78,7 @@ const createUser = async (data) => {
 };
 
 const sendCredentials = async (credentials) => {
-  const res = await fetch(`${BASE}/users/login`,{
+  const res = await fetch(`${BASE}/users/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -80,110 +93,115 @@ const sendCredentials = async (credentials) => {
   }
 };
 
-
-const sentUpdatedUserData = async (data,token) => {
-  let res = await fetch(`${BASE}user`,{
+const sentUpdatedUserData = async (data, token) => {
+  let res = await fetch(`${BASE}user`, {
     method: "PUT",
     headers: {
-      'accept': 'application/json',
-    'Authorization': `Token ${token}`,
-    'Content-Type': 'application/json'
+      accept: "application/json",
+      Authorization: `Token ${token}`,
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  })
+  });
 
   if (!res.ok) {
     throw new Error(`Couldn't update you account...Received ${res.status}`);
   } else {
     return res.json();
   }
-}
+};
 
-export const postArticle = async (data,token) => {
-  console.log(token)
-  const res = await fetch(`${BASE}articles`,{
+export const postArticle = async (data, token) => {
+  console.log(token);
+  const res = await fetch(`${BASE}articles`, {
     method: "POST",
     headers: {
-      'accept': 'application/json',
-      'Authorization': `Token ${token}`,
-      'Content-Type': 'application/json'
+      accept: "application/json",
+      Authorization: `Token ${token}`,
+      "Content-Type": "application/json",
     },
-    body:JSON.stringify(data)
-
-  })
+    body: JSON.stringify(data),
+  });
 
   if (!res.ok) {
     throw new Error(`Couldn't update article...Received ${res.status}`);
   } else {
-    
     return res.json();
   }
+};
 
-}
-
-export const likeAnArticle = async (slug,token) => {
-  console.log('Like')
-  localStorage.setItem(slug,true)
-  let res = await fetch(`${BASE}articles/${slug}/favorite`,{
+export const likeAnArticle = async (slug, token) => {
+  console.log("Like");
+  localStorage.setItem(slug, true);
+  let res = await fetch(`${BASE}articles/${slug}/favorite`, {
     method: "POST",
-    headers:{
-      'accept': 'application/json',
-      'Authorization': `Token ${token}`,
-      'Content-Type': 'application/json'
-    }
-  })
+    headers: {
+      accept: "application/json",
+      Authorization: `Token ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
 
   if (!res.ok) {
-    
     throw new Error(`Couldn't like an article...Received ${res.status}`);
-    
   } else {
-    
     return res.json();
   }
+};
 
-}
-
-export const unlikeAnArticle = async (slug,token) => {
-  console.log('Unlike')
-  localStorage.removeItem(slug)
-  let res = await fetch(`${BASE}articles/${slug}/favorite`,{
+export const unlikeAnArticle = async (slug, token) => {
+  console.log("Unlike");
+  localStorage.removeItem(slug);
+  let res = await fetch(`${BASE}articles/${slug}/favorite`, {
     method: "DELETE",
-    headers:{
-      'accept': 'application/json',
-      'Authorization': `Token ${token}`,
-      'Content-Type': 'application/json'
-    }
-  })
+    headers: {
+      accept: "application/json",
+      Authorization: `Token ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
 
   if (!res.ok) {
-    
-    throw new Error(`Couldn't delete like from article...Received ${res.status}`);
-    
+    throw new Error(
+      `Couldn't delete like from article...Received ${res.status}`
+    );
   } else {
-    
     return res.json();
   }
+};
 
-}
-
-export const deleteAnArticle = async (slug,token) => {
-  let res = await fetch(`${BASE}articles/${slug}`,{
-    method:'DELETE',
-    headers:{
-      'Authorization': `Token ${token}`,
-    }
-  })
+export const deleteAnArticle = async (slug, token) => {
+  let res = await fetch(`${BASE}articles/${slug}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Token ${token}`,
+    },
+  });
 
   if (!res.ok) {
-    
     throw new Error(`Couldn't like an article...Received ${res.status}`);
-    
   } else {
-    
-    return 'has been deleted';
+    return "has been deleted";
   }
-}
+};
+
+const sendUpdatedArticle = async (slug, token, data) => {
+  console.log(slug)
+  let res = await fetch(`${BASE}/articles/${slug}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Token ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    throw new Error(`Couldn't update...Received ${res.status}`);
+  } else {
+    return res.json();
+  }
+};
 
 // ----------thunk creators-------------
 
@@ -193,9 +211,8 @@ export const createNewUser = (data) => {
     createUser(data)
       .then((data) => {
         console.log(data);
-        dispatch(setUserError(null))
-        dispatch(setRegisterSuccess())
-        
+        dispatch(setUserError(null));
+        dispatch(setRegisterSuccess());
       })
       .catch((e) => {
         console.log(e.message);
@@ -210,7 +227,9 @@ const fetchArticle = (slug) => {
     getArticle(slug)
       .then((data) => {
         const { article } = data;
-        const updatedArticle = JSON.parse(localStorage.getItem(slug)) ? {...article,favorited:true} : article
+        const updatedArticle = JSON.parse(localStorage.getItem(slug))
+          ? { ...article, favorited: true }
+          : article;
         dispatch(setArticle(updatedArticle));
       })
       .catch((error) => {
@@ -219,13 +238,12 @@ const fetchArticle = (slug) => {
   };
 };
 
-
 const fetchArticles = (offset) => {
   return (dispatch) => {
     dispatch(setArticlesLoading());
     getArticles(offset)
       .then((data) => {
-        console.log('fetched')
+        console.log("fetched");
         dispatch(setSpinner());
         let likedArticles = [];
         if (Array.isArray(data.articles)) {
@@ -247,39 +265,51 @@ const fetchArticles = (offset) => {
 
 export const signIn = (data) => {
   return (dispatch) => {
-      dispatch(setLoginLoading())
-      sendCredentials(data)
-      .then(data => {
-        dispatch(setLoginError(null))
-        localStorage.setItem('user',JSON.stringify(data))
-        dispatch(setUser(data))
+    dispatch(setLoginLoading());
+    sendCredentials(data)
+      .then((data) => {
+        dispatch(setLoginError(null));
+        localStorage.setItem("user", JSON.stringify(data));
+        dispatch(setUser(data));
       })
-      .catch(e => dispatch(setLoginError(e)))
+      .catch((e) => dispatch(setLoginError(e)));
   };
 };
 
-export const updateUser = (data,token) => {
+export const updateUser = (data, token) => {
   return (dispatch) => {
-    dispatch(setUpdateLoading())
-    sentUpdatedUserData(data,token)
-    .then(data => {
-      dispatch(setUser(data))
-      localStorage.setItem('user',JSON.stringify(data))
-      dispatch(setUpdateSuccess())
+    dispatch(setUpdateLoading());
+    sentUpdatedUserData(data, token)
+      .then((data) => {
+        dispatch(setUser(data));
+        localStorage.setItem("user", JSON.stringify(data));
+        dispatch(setUpdateSuccess());
+      })
+      .catch((e) => dispatch(setUpdateError(e)));
+  };
+};
+
+export const removeArticle = (slug, token) => {
+  return (dispatch) => {
+    deleteAnArticle(slug, token)
+      .then((data) => {
+        console.log(data);
+        dispatch(setArticle(null));
+        dispatch(setDeleted(true));
+      })
+      .catch((e) => dispatch(setError(e)));
+  };
+};
+
+export const updateArticle = (slug,token,data) => {
+  return (dispatch) => {
+    dispatch(setUpdateFormLoading())
+    sendUpdatedArticle(slug,token,data).then(data => {
+      dispatch(setUpdateFormSuccess())
+      dispatch(setArticle(data))
     })
-    .catch(e => dispatch(setUpdateError(e)))
+    .catch(e => setUpdateFormError(e))
   }
 }
-
-  export const removeArticle = (slug,token) => {
-
-    return (dispatch) => {
-      deleteAnArticle(slug,token).then(data =>{
-        console.log(data)
-        dispatch(setArticle(null))
-        dispatch(setDeleted(true))
-      }).catch(e => dispatch(setError(e)))
-    }
-  }
 
 export { getArticles, getArticle, fetchArticle, fetchArticles };
