@@ -15,10 +15,6 @@ import { Link } from "react-router-dom";
 export default function BigArticle() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
   const handleOk = () => {
     setIsModalOpen(false);
     dispatch(removeArticle(slug, token));
@@ -27,6 +23,11 @@ export default function BigArticle() {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
+  const greyBorder = "1px solid grey";
+  const blackBorder = "1px solid black";
+  const greyColor = "grey";
+  const blackColor = "black";
 
   const slug = useSelector((state) => state.bigArticleReducer.slug);
 
@@ -95,7 +96,12 @@ export default function BigArticle() {
                           height: "100%",
                         }}
                       >
-                        <div style={{ display: "flex", alignItems: "center" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                        >
                           <h10
                             style={{
                               width: "fit-content",
@@ -108,10 +114,15 @@ export default function BigArticle() {
                           </h10>
                           {favorited ? (
                             <div
-                              style={{ display: "flex", alignItems: "center" }}
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                              }}
                             >
                               <svg
-                                style={{ cursor: "pointer" }}
+                                style={{
+                                  cursor: "pointer",
+                                }}
                                 onClick={() =>
                                   handleClick(slug, token, favorited)
                                 }
@@ -126,17 +137,29 @@ export default function BigArticle() {
                                   fill="#FF0707"
                                 />
                               </svg>
-                              <span style={{ marginLeft: "1%" }}>{likes}</span>
+                              <span
+                                style={{
+                                  marginLeft: "1%",
+                                }}
+                              >
+                                {likes}
+                              </span>
                             </div>
                           ) : (
                             <div
-                              style={{ display: "flex", alignItems: "center" }}
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                              }}
                             >
                               <svg
                                 onClick={() =>
                                   handleClick(slug, token, favorited)
                                 }
-                                style={{ marginRight: "5px" }}
+                                style={{
+                                  marginRight: "5px",
+                                  cursor: "pointer",
+                                }}
                                 width="16"
                                 height="16"
                                 viewBox="0 0 16 16"
@@ -149,27 +172,47 @@ export default function BigArticle() {
                                   fillOpacity="0.75"
                                 />
                               </svg>
-                              <span style={{ marginLeft: "1%" }}>{likes}</span>
+                              <span
+                                style={{
+                                  marginLeft: "1%",
+                                }}
+                              >
+                                {likes}
+                              </span>
                             </div>
                           )}
                         </div>
-                        <div>
+                        <ul className={s.tags}>
                           {tags.map((item, i) => {
-                            const margin = i > 0 ? "5px" : "";
+                            if (typeof item != "string" || item === "") {
+                              return;
+                            }
+                            let border = i === 0 ? blackBorder : greyBorder;
+                            let color = i === 0 ? blackColor : greyColor;
                             return (
-                              <span
+                              <li
                                 style={{
-                                  marginLeft: `${margin}`,
-                                  color: "red",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  border: `${border}`,
+                                  borderRadius: "3px",
+                                  color: `${color}`,
+                                  padding: "5px",
+                                  margin: "0 5px 0 5px",
+                                  width: "fit-content",
                                 }}
                                 key={i}
                               >
                                 {item}
-                              </span>
+                              </li>
                             );
                           })}
-                        </div>
-                        <p style={{ marginBottom: "0" }}>
+                        </ul>
+                        <p
+                          style={{
+                            marginBottom: "0",
+                          }}
+                        >
                           {description
                             ? description
                             : "No description for this article"}
@@ -178,10 +221,18 @@ export default function BigArticle() {
                       <div className={s.userInfoWrapper}>
                         <div className={s.userInfo}>
                           <span
-                            style={{ display: "flex", flexDirection: "column" }}
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                            }}
                           >
                             {article?.author?.username}
-                            <span style={{ fontSize: "12px", color: "grey" }}>
+                            <span
+                              style={{
+                                fontSize: "12px",
+                                color: "grey",
+                              }}
+                            >
                               {creationDate}
                             </span>
                           </span>
@@ -209,7 +260,7 @@ export default function BigArticle() {
                               style={{
                                 color: "red",
                                 background: "none",
-                                padding: "3%",
+                                padding: "15px",
                                 border: "1px solid red",
                                 borderRadius: "4px",
                                 width: "78px",
@@ -225,25 +276,31 @@ export default function BigArticle() {
                             >
                               <p>Are you sure to delete this article?</p>
                             </Modal>
-                            <Link to = {`/articles/${slug}/edit`}>
-                                <button
-                                  style={{
-                                    color: "#52C41A",
-                                    background: "none",
-                                    padding: "3%",
-                                    border: "1px solid #52C41A",
-                                    borderRadius: "4px",
-                                    width: "65px",
-                                  }}
-                                >
-                                  edit
-                                </button>
+                            <Link to={`/articles/${slug}/edit`}>
+                              <button
+                                style={{
+                                  color: "#52C41A",
+                                  background: "none",
+                                  padding: "15px",
+                                  border: "1px solid #52C41A",
+                                  borderRadius: "4px",
+                                  width: "65px",
+                                }}
+                              >
+                                edit
+                              </button>
                             </Link>
                           </div>
                         ) : null}
                       </div>
                     </div>
-                    <p style={{ marginTop: "5%" }}>{article?.body}</p>
+                    <p
+                      style={{
+                        marginTop: "5%",
+                      }}
+                    >
+                      {article?.body}
+                    </p>
                   </div>
                 </div>
               )}

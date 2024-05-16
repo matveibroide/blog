@@ -1,28 +1,28 @@
 .formContainer {
-    composes: formContainer from './SignUp.module.css'
+  composes: formContainer from "./SignUp.module.css";
 }
 
 .form {
-    composes: form from './SignUp.module.css'
+  composes: form from "./SignUp.module.css";
 }
 
 .formInnerWrapper {
-    composes: formInnerWrapper from './SignUp.module.css'
+  composes: formInnerWrapper from "./SignUp.module.css";
 }
 
 .listItem {
-    composes: listItem from './SignUp.module.css'
+  composes: listItem from "./SignUp.module.css";
 }
 
 .btnSubmit {
-    background-color: #1890FF;
-    border-radius: 4px;
-    color: white;
-    border: none;
-    width: 319px;
-    height: 40px;
+  background-color: #1890ff;
+  border-radius: 4px;
+  color: white;
+  border: none;
+  width: 319px;
+  height: 40px;
 }
 
 .formInput {
-    composes: formInput from './NewArticle.module.css'
+  composes: formInput from "./NewArticle.module.css";
 }

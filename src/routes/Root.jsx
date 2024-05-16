@@ -37,7 +37,9 @@ export default function Root() {
               <li>
                 <Link style={{ textDecoration: "none" }} to="/new-article">
                   <button
-                    style={{ backgroundColor: "#fff" }}
+                    style={{
+                      backgroundColor: "#fff",
+                    }}
                     className={s.actionBtn}
                   >
                     Create Article

@@ -1,12 +1,29 @@
 import { useState } from "react";
 import s from "./NewArticle.module.css";
 import { useForm } from "react-hook-form";
-import { postArticle, updateArticle } from "../services/services";
+import { postNewArticle, updateArticle } from "../services/services";
 import { useDispatch, useSelector } from "react-redux";
+import { Spin } from "antd";
 
 export default function NewArticle({ type }) {
+  const dispatch = useDispatch();
+  //newArticle
+
+  const postError = useSelector((state) => state.newFormReducer?.error);
+  const postSuccess = useSelector((state) => state.newFormReducer?.postSuccess);
+  const postLoading = useSelector((state) => state.newFormReducer?.loading);
+
+  //updateArticle
+
+  const updateError = useSelector((state) => state.updateFormReducer?.error);
+  const updateSuccess = useSelector(
+    (state) => state.updateFormReducer?.updateSuccess
+  );
+  const updateLoading = useSelector(
+    (state) => state.updateFormReducer?.loading
+  );
+
   const {
-    watch,
     reset,
     register,
     handleSubmit,
@@ -19,15 +36,11 @@ export default function NewArticle({ type }) {
     },
   });
 
-  const dispatch = useDispatch();
-
   const createId = () => "id" + Math.random().toString(16).slice(2);
 
   const [tags, setTags] = useState([
     { value: "", clicked: false, id: createId() },
   ]);
-  
-  const [success, setSuccess] = useState(null);
 
   const addTag = (tagName, id) => {
     setTags((prevTags) => {
@@ -82,21 +95,23 @@ export default function NewArticle({ type }) {
             }
             return acc;
           }, []);
-          
-          if (type === "new") {
-            postArticle(
-              {
-                article: {
-                  title: title,
-                  description: description,
-                  body: text,
-                  tagList: articleTags,
-                },
-              },
-              token
-            ).then((data) => setSuccess(true));
 
-            reset()
+          if (type === "new") {
+            dispatch(
+              postNewArticle(
+                {
+                  article: {
+                    title: title,
+                    description: description,
+                    body: text,
+                    tagList: articleTags,
+                  },
+                },
+                token
+              )
+            );
+
+            reset();
           } else {
             dispatch(
               updateArticle(slug, token, {
@@ -108,19 +123,23 @@ export default function NewArticle({ type }) {
                 },
               })
             );
-            reset()
+            reset();
           }
         })}
       >
         <ul className={s.formInnerWrapper}>
           <li>
-            <h1 style={{ textAlign: "center" }}>Create new article</h1>
+            <h1 style={{ textAlign: "center" }}>
+              {type === "new" ? "Create new article" : "Edit article"}
+            </h1>
           </li>
           <li className={s.listItem}>
             Title
             <input
               className={s.formInput}
-              {...register("title", { required: "Title required" })}
+              {...register("title", {
+                required: "Title required",
+              })}
               type="text"
               placeholder="Title"
             />
@@ -132,7 +151,9 @@ export default function NewArticle({ type }) {
             Short description
             <input
               className={s.formInput}
-              {...register("description", { required: "Description required" })}
+              {...register("description", {
+                required: "Description required",
+              })}
               type="text"
               placeholder="Description"
             />
@@ -145,7 +166,9 @@ export default function NewArticle({ type }) {
             <input
               style={{ height: "168px" }}
               className={s.formInput}
-              {...register("text", { required: "Body required" })}
+              {...register("text", {
+                required: "Body required",
+              })}
               type="text"
               placeholder="Text"
             />
@@ -155,7 +178,13 @@ export default function NewArticle({ type }) {
           </li>
           <li className={s.listItem}>
             Tags
-            <ul style={{ width: "80%", listStyle: "none", padding: "0" }}>
+            <ul
+              style={{
+                width: "80%",
+                listStyle: "none",
+                padding: "0",
+              }}
+            >
               {tags.map((item, i) => {
                 return (
                   <li className={s.tagsItem} key={item.id}>
@@ -199,9 +228,37 @@ export default function NewArticle({ type }) {
           </li>
           <li>
             <button className={s.formSubmitBtn}>Send</button>
-            {success ? (
-              <p style={{ color: "green" }}>Article created!</p>
+            {postSuccess ? (
+              <p
+                style={{
+                  color: "green",
+                  textAlign: "center",
+                }}
+              >
+                Article created!
+              </p>
             ) : null}
+            {updateSuccess ? (
+              <p
+                style={{
+                  color: "green",
+                  textAlign: "center",
+                }}
+              >
+                Article updated!
+              </p>
+            ) : null}
+            {postError || updateError ? (
+              <p
+                style={{
+                  color: "red",
+                  textAlign: "center",
+                }}
+              >
+                Something gone wrong...
+              </p>
+            ) : null}
+            {postLoading || updateLoading ? <Spin /> : null}
           </li>
         </ul>
       </form>

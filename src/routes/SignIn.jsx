@@ -46,7 +46,14 @@ export default function SignIn() {
       >
         <ul className={s.formInnerWrapper}>
           <li>
-            <h2 style={{ margin: "0 auto", textAlign: "center" }}>Sign In</h2>
+            <h2
+              style={{
+                margin: "0 auto",
+                textAlign: "center",
+              }}
+            >
+              Sign In
+            </h2>
           </li>
           <li className={s.listItem}>
             Email addres

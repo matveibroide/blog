@@ -51,7 +51,11 @@ export default function Articles() {
           {spinner ? (
             <Spin
               size="large"
-              style={{ margin: "20% auto", width: "100%", height: "50%" }}
+              style={{
+                margin: "20% auto",
+                width: "100%",
+                height: "50%",
+              }}
             />
           ) : null}
           {articles != undefined

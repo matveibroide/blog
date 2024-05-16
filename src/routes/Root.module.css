@@ -1,58 +1,48 @@
 .nav {
-    margin: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    list-style: none;
-    background-color: #FFFF;
-    height: 80px;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  background-color: #ffff;
+  height: 80px;
 }
 
 .app {
-    
-    height: fit-content;
-    background-color: #EBEEF3;
-    display: flex;
-    flex-direction: column;
+  height: fit-content;
+  background-color: #ebeef3;
+  display: flex;
+  flex-direction: column;
 }
 
 .navBtns {
-    margin-right: 2%;
-    width: 7%;
-    display: flex;
-    list-style: none;
-    justify-content: space-between;
-    align-items: center;
+  margin-right: 2%;
+  width: 7%;
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  align-items: center;
 }
 
-
-
 .actionBtn {
-    cursor: pointer;
-    color: #52C41A;
-    border: 1px solid #52C41A ;
-    padding: 6% 10% 6% 10%;
-    border-radius: 5px;
-    
-    
+  cursor: pointer;
+  color: #52c41a;
+  border: 1px solid #52c41a;
+  padding: 6% 10% 6% 10%;
+  border-radius: 5px;
 }
 
 .userNav {
-    width: 30%;
-    justify-content: space-between;
-    display: flex;
-    list-style: none;
-    align-items: center;
+  width: 30%;
+  justify-content: space-between;
+  display: flex;
+  list-style: none;
+  align-items: center;
 }
 
 .userDetails {
-    width: 32%;
-    display:flex;
-    align-items: center;
-    justify-content: space-between;
+  width: 32%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-
-
-
-
-

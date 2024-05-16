@@ -29,7 +29,16 @@ import {
   setLoginLoading,
   setLoginError,
 } from "../store/userLoginSlice";
-import { setUpdateFormError, setUpdateFormLoading, setUpdateFormSuccess } from "../store/updateFormSlice";
+import {
+  setUpdateFormError,
+  setUpdateFormLoading,
+  setUpdateFormSuccess,
+} from "../store/updateFormSlice";
+import {
+  setNewFormError,
+  setNewFormLoading,
+  setNewFormSuccess,
+} from "../store/newArticleFormSlice";
 
 /* const BASE = `https://api.realworld.io/api/`; */
 
@@ -186,7 +195,7 @@ export const deleteAnArticle = async (slug, token) => {
 };
 
 const sendUpdatedArticle = async (slug, token, data) => {
-  console.log(slug)
+  console.log(slug);
   let res = await fetch(`${BASE}/articles/${slug}`, {
     method: "PUT",
     headers: {
@@ -204,6 +213,22 @@ const sendUpdatedArticle = async (slug, token, data) => {
 };
 
 // ----------thunk creators-------------
+
+export const postNewArticle = (data, token) => {
+  return (dispatch) => {
+    dispatch(setNewFormLoading(true));
+    postArticle(data, token)
+      .then(() => {
+        dispatch(setNewFormSuccess(true));
+      })
+      .then(() => {
+        setTimeout(() => {
+          dispatch(setNewFormSuccess(false));
+        }, 2500);
+      })
+      .catch((e) => dispatch(setNewFormError(e)));
+  };
+};
 
 export const createNewUser = (data) => {
   return (dispatch) => {
@@ -301,15 +326,21 @@ export const removeArticle = (slug, token) => {
   };
 };
 
-export const updateArticle = (slug,token,data) => {
+export const updateArticle = (slug, token, data) => {
   return (dispatch) => {
-    dispatch(setUpdateFormLoading())
-    sendUpdatedArticle(slug,token,data).then(data => {
-      dispatch(setUpdateFormSuccess())
-      dispatch(setArticle(data))
-    })
-    .catch(e => setUpdateFormError(e))
-  }
-}
+    dispatch(setUpdateFormLoading());
+    sendUpdatedArticle(slug, token, data)
+      .then((data) => {
+        dispatch(setUpdateFormSuccess(true));
+        dispatch(setArticle(data));
+      })
+      .then(() => {
+        setTimeout(() => {
+          dispatch(setUpdateFormSuccess(false));
+        }, 2500);
+      })
+      .catch((e) => setUpdateFormError(e));
+  };
+};
 
 export { getArticles, getArticle, fetchArticle, fetchArticles };

@@ -46,7 +46,11 @@ export default function SignUp() {
 
             dispatch(
               createNewUser({
-                user: { username: name, email: email, password: firstPassword },
+                user: {
+                  username: name,
+                  email: email,
+                  password: firstPassword,
+                },
               })
             );
 
@@ -55,7 +59,12 @@ export default function SignUp() {
           className={s.form}
         >
           <ul className={s.formInnerWrapper}>
-            <h2 style={{ margin: "0 auto", marginTop: "10%" }}>
+            <h2
+              style={{
+                margin: "0 auto",
+                marginTop: "10%",
+              }}
+            >
               Create new account
             </h2>
 
@@ -99,7 +108,9 @@ export default function SignUp() {
                 }}
                 placeholder="Email"
                 type="email"
-                {...register("email", { required: "This is required field" })}
+                {...register("email", {
+                  required: "This is required field",
+                })}
               />
             </li>
             {errors.email?.message ? (
@@ -184,7 +195,10 @@ export default function SignUp() {
               Already have an account?{" "}
               <Link
                 to="/sign-in"
-                style={{ color: "#1890FF", textDecoration: "none" }}
+                style={{
+                  color: "#1890FF",
+                  textDecoration: "none",
+                }}
               >
                 Sign In
               </Link>

@@ -7,14 +7,14 @@ export const bigArticleSlice = createSlice({
     currentArticle: null,
     loading: false,
     error: null,
-    deleted:false
+    deleted: false,
   },
   reducers: {
     setSlug: (state, action) => {
       state.slug = action.payload;
     },
     setArticle: (state, action) => {
-      state.deleted = false
+      state.deleted = false;
       state.currentArticle = action.payload;
       state.loading = false;
       state.error = null;
@@ -31,9 +31,9 @@ export const bigArticleSlice = createSlice({
     },
 
     setDeleted: (state) => {
-      console.log('setDeleted()')
-      state.deleted = true
-    }
+      console.log("setDeleted()");
+      state.deleted = true;
+    },
   },
 });
 
