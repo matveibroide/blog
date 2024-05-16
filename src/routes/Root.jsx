@@ -22,7 +22,7 @@ export default function Root() {
 
   const handleDelete = () => {
     dispatch(deleteUser());
-    localStorage.clear();
+    localStorage.removeItem('user');
   };
 
   return (
