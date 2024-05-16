@@ -29,7 +29,7 @@ export default function Root() {
     <div className={s.app}>
       <nav>
         <ul className={s.nav}>
-          <Link style={{ textDecoration: "none" }} to="./">
+          <Link style={{ textDecoration: "none",color:'black' }} to="./">
             <li style={{ cursor: "pointer" }}>Realworld blog</li>
           </Link>
           {user ? (
@@ -74,10 +74,10 @@ export default function Root() {
             </ul>
           ) : (
             <ul className={s.navBtns}>
-              <Link style={{ textDecoration: "none" }} to="/sign-in">
+              <Link style={{ textDecoration: "none",color:'black' }} to="/sign-in">
                 <li>Sign in</li>
               </Link>
-              <Link style={{ textDecoration: "none" }} to="/sign-up">
+              <Link style={{ textDecoration: "none"}} to="/sign-up">
                 <li className={s.actionBtn}>Sign up</li>
               </Link>
             </ul>
