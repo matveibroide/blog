@@ -61,6 +61,7 @@ export default function BigArticle() {
   const deleted = useSelector((state) => state.bigArticleReducer?.deleted);
 
   const handleClick = async (slug, token, currentFavorited) => {
+    if (!token) {return}
     if (!currentFavorited) {
       await likeAnArticle(slug, token);
       dispatch(fetchArticle(slug));

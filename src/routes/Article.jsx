@@ -39,6 +39,7 @@ export default function Article({
   const blackColor = "black";
 
   const handleClick = async (slug, token, currentFavorited) => {
+    if (!token) {return}
     if (!currentFavorited) {
       await likeAnArticle(slug, token);
       dispatch(fetchArticles(offset));
