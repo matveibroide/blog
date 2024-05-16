@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../services/services";
 import { useNavigate, Link } from "react-router-dom";
+import { Spin } from "antd";
 
 export default function SignIn() {
   const {
@@ -23,6 +24,7 @@ export default function SignIn() {
 
   const error = useSelector((state) => state.loginReducer.error);
   const user = useSelector((state) => state.loginReducer.user);
+  const loading = useSelector((state) => state.loginReducer?.loading);
 
   if (user) {
     navigate("/", { replace: true });
@@ -74,9 +76,10 @@ export default function SignIn() {
             />
           </li>
           <li className={s.listItem}>
-            <button style={{ height: "40px" }} className={s.formBtn}>
-              Login
+            <button style={{ height: "40px",marginBottom:`${loading ? '20px' : ``}` }} className={s.formBtn}>
+              Login 
             </button>
+            {loading ? <Spin/> : null}
           </li>
           <li>
             <p

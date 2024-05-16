@@ -56,7 +56,6 @@ const getArticles = async (offset = 0) => {
 };
 
 const getArticle = async (id) => {
-  console.log(id);
   let res = await fetch(`${BASE}articles/${id}`);
 
   if (!res.ok) {
@@ -121,7 +120,6 @@ const sentUpdatedUserData = async (data, token) => {
 };
 
 export const postArticle = async (data, token) => {
-  console.log(token);
   const res = await fetch(`${BASE}articles`, {
     method: "POST",
     headers: {
@@ -140,7 +138,6 @@ export const postArticle = async (data, token) => {
 };
 
 export const likeAnArticle = async (slug, token) => {
-  console.log("Like");
   localStorage.setItem(slug, true);
   let res = await fetch(`${BASE}articles/${slug}/favorite`, {
     method: "POST",
@@ -159,7 +156,6 @@ export const likeAnArticle = async (slug, token) => {
 };
 
 export const unlikeAnArticle = async (slug, token) => {
-  console.log("Unlike");
   localStorage.removeItem(slug);
   let res = await fetch(`${BASE}articles/${slug}/favorite`, {
     method: "DELETE",
@@ -195,7 +191,6 @@ export const deleteAnArticle = async (slug, token) => {
 };
 
 const sendUpdatedArticle = async (slug, token, data) => {
-  console.log(slug);
   let res = await fetch(`${BASE}/articles/${slug}`, {
     method: "PUT",
     headers: {
@@ -235,12 +230,10 @@ export const createNewUser = (data) => {
     dispatch(setUserLoading());
     createUser(data)
       .then((data) => {
-        console.log(data);
         dispatch(setUserError(null));
         dispatch(setRegisterSuccess());
       })
       .catch((e) => {
-        console.log(e.message);
         dispatch(setUserError(e));
       });
   };
@@ -268,7 +261,6 @@ const fetchArticles = (offset) => {
     dispatch(setArticlesLoading());
     getArticles(offset)
       .then((data) => {
-        console.log("fetched");
         dispatch(setSpinner());
         let likedArticles = [];
         if (Array.isArray(data.articles)) {
@@ -308,7 +300,13 @@ export const updateUser = (data, token) => {
       .then((data) => {
         dispatch(setUser(data));
         localStorage.setItem("user", JSON.stringify(data));
-        dispatch(setUpdateSuccess());
+        dispatch(setUpdateSuccess(true));
+      })
+      .then(() => {
+        setTimeout(() => {
+          console.log('changing success')
+          dispatch(setUpdateSuccess(false));
+        }, 3000);
       })
       .catch((e) => dispatch(setUpdateError(e)));
   };
@@ -318,7 +316,6 @@ export const removeArticle = (slug, token) => {
   return (dispatch) => {
     deleteAnArticle(slug, token)
       .then((data) => {
-        console.log(data);
         dispatch(setArticle(null));
         dispatch(setDeleted(true));
       })

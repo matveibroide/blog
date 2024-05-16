@@ -15,10 +15,10 @@ export const updateUserSlice = createSlice({
       return { ...state, loading: true };
     },
 
-    setUpdateSuccess: (state) => {
+    setUpdateSuccess: (state,action) => {
       return {
         ...state,
-        updateSuccess: true,
+        updateSuccess: action.payload,
         loading: false,
         error: false,
       };

@@ -3,6 +3,7 @@ import { updateUser } from "../services/services";
 import { Form, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import ServerErrorMessage from "../components/ServerError/ServerErrorMessage";
+import { Spin } from "antd";
 export default function Profile() {
   const dispatch = useDispatch();
 
@@ -22,7 +23,12 @@ export default function Profile() {
   });
 
   const token = useSelector((state) => state.loginReducer?.user?.user?.token);
-  const error = useSelector((state) => state.updateUserReducer.error);
+  const error = useSelector((state) => state.updateUserReducer?.error);
+  const updateSuccess = useSelector(
+    (state) => state.updateUserReducer?.updateSuccess
+  );
+  const loading = useSelector((state) => state.updateUserReducer?.loading);
+  console.log(loading)
 
   return (
     <div className={s.formContainer}>
@@ -46,6 +52,8 @@ export default function Profile() {
                 token
               )
             );
+
+            reset();
           })}
           className={s.form}
           action=""
@@ -117,10 +125,19 @@ export default function Profile() {
               />
             </li>
             <li>
-              <button className={s.btnSubmit} type="submit">
-                Save
-              </button>
+              {loading ? (
+                <Spin />
+              ) : (
+                <button className={s.btnSubmit} type="submit">
+                  Save
+                </button>
+              )}
             </li>
+            {updateSuccess ? (
+              <li>
+                <p style={{ color: "green" }}>Updated successfully</p>
+              </li>
+            ) : null}
           </ul>
         </form>
       )}

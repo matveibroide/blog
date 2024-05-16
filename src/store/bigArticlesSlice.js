@@ -31,7 +31,6 @@ export const bigArticleSlice = createSlice({
     },
 
     setDeleted: (state) => {
-      console.log("setDeleted()");
       state.deleted = true;
     },
   },
